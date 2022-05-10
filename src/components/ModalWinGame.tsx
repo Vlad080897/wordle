@@ -1,21 +1,10 @@
 import { Modal, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { Dispatch, SetStateAction } from 'react';
+import { modalStyle } from '../styles/styles';
 import { guesseType } from '../types/types';
 
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: '#FFFF',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
-
-const ModalWinGame: React.FC<IModalWinGameType> = ({ isCorrect, setGuesses, setHistory, setTurn, setIsCorrect, setNewCircle, newCircle }) => {
+const ModalWinGame: React.FC<IModalWinGameType> = ({ isCorrect, setGuesses, setHistory, setTurn, setIsCorrect, setNewCircle, setUsedKeys, newCircle }) => {
   const [open, setOpen] = React.useState(isCorrect);
   const handleClose = () => {
     setOpen(!open);
@@ -24,15 +13,16 @@ const ModalWinGame: React.FC<IModalWinGameType> = ({ isCorrect, setGuesses, setH
     setTurn(0);
     setIsCorrect(false);
     setNewCircle(!newCircle)
-
+    setUsedKeys({})
   }
+
   return (
     <>
       <Modal
         open={open}
         onClose={handleClose}
       >
-        <Box sx={style}>
+        <Box sx={modalStyle}>
           <Typography>
             Congratulations! You won!
           </Typography>
@@ -40,7 +30,6 @@ const ModalWinGame: React.FC<IModalWinGameType> = ({ isCorrect, setGuesses, setH
 
       </Modal>
     </>
-
   )
 }
 
@@ -54,4 +43,5 @@ type IModalWinGameType = {
   setTurn: Dispatch<SetStateAction<number>>
   setIsCorrect: Dispatch<SetStateAction<boolean>>
   setNewCircle: Dispatch<SetStateAction<boolean>>
+  setUsedKeys: Dispatch<SetStateAction<{}>>
 }

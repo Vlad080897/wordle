@@ -1,3 +1,4 @@
+import { usedKeysType } from './../components/Keypad';
 import { guesseType } from './../types/types';
 import { useState } from "react"
 
@@ -7,6 +8,7 @@ const useWordle = (solution: string) => {
     const [guesses, setGuesses] = useState<(guesseType[] | undefined)[]>([...Array(6)]) // each guess is an array
     const [history, setHistory] = useState<string[]>([]) // each guess is a string
     const [isCorrect, setIsCorrect] = useState<boolean>(false)
+    const [usedKeys, setUsedKeys] = useState<usedKeysType>({})
 
 
     // format a guess into an array of letter objects 
@@ -69,7 +71,7 @@ const useWordle = (solution: string) => {
         }
     }
 
-    return { turn, currentGuess, guesses, isCorrect, handleKeyup, setGuesses, setHistory, setTurn, setIsCorrect }
+    return { turn, currentGuess, guesses, isCorrect, handleKeyup, setGuesses, setHistory, setTurn, setIsCorrect, usedKeys, setUsedKeys }
 }
 
 export default useWordle

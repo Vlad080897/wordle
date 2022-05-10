@@ -3,10 +3,23 @@ import useWordle from '../hooks/useWordle'
 import '../index.css'
 import Grid from './Grid'
 import Keypad from './Keypad'
+import ModalLostGame from './ModalLostGame'
 import ModalWinGame from './ModalWinGame'
 
 const Wordle: React.FC<IWordleProps> = React.memo(({ solution, setNewCircle, newCircle }) => {
-  const { currentGuess, handleKeyup, guesses, turn, isCorrect, setGuesses, setHistory, setTurn, setIsCorrect } = useWordle(solution)
+  const {
+    usedKeys,
+    currentGuess,
+    guesses,
+    turn,
+    isCorrect,
+    setUsedKeys,
+    handleKeyup,
+    setGuesses,
+    setHistory,
+    setTurn,
+    setIsCorrect
+  } = useWordle(solution)
   const [isShown, setIsShown] = useState(false)
 
   useEffect(() => {
@@ -16,7 +29,7 @@ const Wordle: React.FC<IWordleProps> = React.memo(({ solution, setNewCircle, new
 
   useEffect(() => {
     setTimeout(() => {
-      setIsShown(isCorrect);
+      setIsShown(isCorrect)
     }, 1300)
   }, [isCorrect])
 
@@ -24,7 +37,7 @@ const Wordle: React.FC<IWordleProps> = React.memo(({ solution, setNewCircle, new
     <>
       <h1 className='title'>Wordle</h1>
       <Grid guesses={guesses} currentGuess={currentGuess} turn={turn} />
-      {useMemo(() => <Keypad guesses={guesses} />, [guesses])}
+      {useMemo(() => <Keypad guesses={guesses} usedKeys={usedKeys} setUsedKeys={setUsedKeys} />, [guesses, usedKeys, setUsedKeys])}
       {isCorrect && isShown &&
         < ModalWinGame
           isCorrect={isCorrect}
@@ -34,8 +47,18 @@ const Wordle: React.FC<IWordleProps> = React.memo(({ solution, setNewCircle, new
           setIsCorrect={setIsCorrect}
           setNewCircle={setNewCircle}
           newCircle={newCircle}
+          setUsedKeys={setUsedKeys}
         />
       }
+      <ModalLostGame
+        turn={turn}
+        isCorrect={isCorrect}
+        setGuesses={setGuesses}
+        setHistory={setHistory}
+        setTurn={setTurn}
+        setNewCircle={setNewCircle}
+        newCircle={newCircle}
+        setUsedKeys={setUsedKeys} />
     </>
   )
 })
@@ -44,8 +67,8 @@ export default Wordle
 
 type IWordleProps = {
   solution: string
-  setNewCircle: Dispatch<SetStateAction<boolean>>
   newCircle: boolean
+  setNewCircle: Dispatch<SetStateAction<boolean>>
 }
 
 

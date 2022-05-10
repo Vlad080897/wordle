@@ -3,7 +3,6 @@ import { guesseType } from '../types/types'
 import NextRow from './NextRow'
 import Row from './Row'
 
-
 const Grid: React.FC<IGridProps> = ({ guesses, currentGuess, turn }) => {
   return (
     <>
