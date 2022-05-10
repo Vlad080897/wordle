@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import Wordle from './components/Wordle';
+import { SolutionType } from './types/types';
 
-function App() {
+const App = React.memo(() => {
+  const [solution, setSolution] = useState<string>('')
+  const [newCircle, setNewCircle] = useState<boolean>(false)
+
+  useEffect(() => {
+    const getSolution = async () => {
+      let response: Response = await fetch('http://localhost:3001/words')
+      let json: SolutionType[] = await response.json()
+      let solution = json[Math.floor(Math.random() * json.length)] // random integer beetwen 0 - 14
+      setSolution(solution.word)
+    }
+    getSolution()
+  }, [newCircle])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Wordle
+        solution={solution}
+        setNewCircle={setNewCircle}
+        newCircle={newCircle}
+      />
     </div>
   );
-}
+})
 
 export default App;
