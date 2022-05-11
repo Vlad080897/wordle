@@ -16,3 +16,5 @@
 2. Install the project with **npm install**
 3. Run json server on port 3001 with such comand **json-server --watch data/db.json --port 3001**
 4. Run the App with **npm start** 
+
+**Notice that for now the game work only in English language**
