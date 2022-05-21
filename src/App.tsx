@@ -8,10 +8,11 @@ const App = React.memo(() => {
 
   useEffect(() => {
     const getSolution = async () => {
-      let response: Response = await fetch('http://localhost:3001/words')
+      let response: Response = await fetch('https://my-json-server.typicode.com/Vlad080897/data-for-wordle/words')
       let json: SolutionType[] = await response.json()
       let solution = json[Math.floor(Math.random() * json.length)] // random integer beetwen 0 - 14
       setSolution(solution.word)
+      debugger
     }
     getSolution()
   }, [newCircle])

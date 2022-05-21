@@ -3,10 +3,11 @@ import '../index.css'
 import { guesseType } from '../types/types'
 
 const Keypad: React.FC<IKeypadProps> = ({ guesses, usedKeys, setUsedKeys }) => {
+  debugger;
   const [letters, setLetters] = useState<Letters[] | null>(null)
 
   useEffect(() => {
-    fetch('http://localhost:3001/letters')
+    fetch('https://my-json-server.typicode.com/Vlad080897/data-for-wordle/letters')
       .then(res => res.json())
       .then(json => {
         setLetters(json)
